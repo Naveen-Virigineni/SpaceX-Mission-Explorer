@@ -1,0 +1,41 @@
+# Name for this workflow
+name: Deploy Website to GitHub Pages
+
+# Run this workflow on every push to the "main" branch
+on:
+  push:
+    branches:
+      - main
+
+# Define the job that will build and deploy your site
+jobs:
+  build-and-deploy:
+    # Use the latest version of Ubuntu as the runner environment
+    runs-on: ubuntu-latest
+
+    # Sequence of steps to run in the job
+    steps:
+      # 1. Get the code from your repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up the specific Node.js version you need
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Or your project's Node.js version
+
+      # 3. Install your project's dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Build the project for production
+      - name: Build project
+        run: npm run build
+
+      # 5. Deploy the contents of the 'build' folder to the 'gh-pages' branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
