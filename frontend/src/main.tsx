@@ -6,7 +6,7 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter> {/* <-- Wrap your App component */}
+    <BrowserRouter basename="/SpaceX-Mission-Explorer/"> {/* <-- Wrap your App component */}
       <App />
     </BrowserRouter>
   </StrictMode>,
